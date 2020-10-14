@@ -1,0 +1,29 @@
+{
+  "name": "negoprot-js",
+  "version": "0.1.0",
+  "description": "Negotiation Protocol",
+  "main": "src/np.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zh/negoprot-js.git"
+  },
+  "keywords": [
+    "blockchain",
+    "bch",
+    "protocol",
+    "negotiation",
+    "agreement"
+  ],
+  "author": "Stoyan Zhekov <zh@zhware.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zh/negoprot-js/issues"
+  },
+  "homepage": "https://github.com/zh/negoprot-js#readme",
+  "dependencies": {
+    "bch-js-ext": "^0.1.1"
+  }
+}
