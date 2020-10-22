@@ -4,6 +4,22 @@ JavaScript library, using [Negotiation Protocol](../negoprot/negoprot-spec.md)
 for organizing events, signaling attendance request and accepting NFT token as
   attendence confirmation. The orginizers and the attenders are isolated from each other and communicate only with signals (transactions) saved to the Bitcoin Cash blockchain.
 
+This project extends the *Negotiation Protocol* with **two new signals**:
+
+* **MTG** meeting/event signal - send by event orginizers
+
+```js
+NP0 MTG AAA1032 T=12345 C=Qm32456
+```
+
+* **ATT** attending signal - send by event attenders
+
+```js
+NP0 ATT AAA1032 T=12345 A=simpleledger:qp123...
+```
+
+Meetings are also represented by Group NFT tokens and attendace is confirmed by sending child NFT tokens, minted from that group token.
+
 ## [WIP] Usage
 
 ### Installation
