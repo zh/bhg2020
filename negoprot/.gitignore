@@ -6,3 +6,5 @@ coverage/
 
 # This paragraph comes last. Force includes specific files.
 !docs/README.md
+
+account.json

@@ -2,9 +2,7 @@ const VERBS = {
   message: 'MSG',
   offer: 'OFF',
   accept: 'ACC',
-  cancel: 'CLS',
-  search: 'SRH',
-  meeting: 'MTG'
+  cancel: 'CLS'
 }
 const MSGLIMIT = 217 // ptoto + verb + message
 
@@ -15,6 +13,10 @@ class Signal {
     this.links = []
     this.verb = ''
     this.payload = ''
+  }
+
+  allowedVerbs() {
+    return VERBS
   }
 
   message(payload, action = 'message') {
@@ -36,14 +38,6 @@ class Signal {
     return this.message(payload, 'cancel')
   }
 
-  search(payload = '') {
-    return this.message(payload, 'search')
-  }
-
-  meeting(payload = '') {
-    return this.message(payload, 'meeting')
-  }
-
   addPayload(payload = '') {
     const newLength = this.length() + payload.length + 1
     if (payload !== '' && payload.match(/^[0-9a-zA-Z]+$/) && newLength < MSGLIMIT) {
@@ -53,10 +47,11 @@ class Signal {
 
   addTx(txid) { return this.addLink(txid, 'T') }
   addCid(cid) { return this.addLink(cid, 'C') }
+  addAddr(address) { return this.addLink(address, 'A') }
 
   addLink(target, type) {
     try {
-      if (!target.match(/^[0-9a-zA-Z]+$/))
+      if (!target.match(/^[0-9a-zA-Z:]+$/))
         throw new Error('target cannot include blanks')
       const newLength = this.length() + target.length + 3
       if (newLength >= MSGLIMIT)
@@ -93,7 +88,7 @@ class Signal {
 
   toJSON() { return JSON.stringify(this.toObj(), null, 2) }
 
-  fromMessage(message) {
+  fromMessage(message, verbsArray = VERBS) {
     try {
       // protocol
       if (!message.startsWith(`${this.proto} `))
@@ -101,12 +96,12 @@ class Signal {
 
       const tokens = message.split(' ')
       // verb
-      if (!Object.values(VERBS).includes(tokens[1]))
+      if (!Object.values(verbsArray).includes(tokens[1]))
         throw new Error('Not proper message type')
       this.verb = tokens[1]
       // optional payload
       let paramsIdx = 2
-      if (!tokens[2].startsWith('T=') && !tokens[2].startsWith('C=')) {
+      if (!['T=', 'C=', 'A='].includes(tokens[2].substring(0, 2))) {
         this.payload = tokens[2]
         paramsIdx = 3
       }
@@ -118,7 +113,7 @@ class Signal {
             parts[1] &&
             parts[0].length > 0 &&
             parts[1].length > 0 &&
-            ['T', 'C'].includes(parts[0]))
+            ['T', 'C', 'A'].includes(parts[0]))
           links.push({type: parts[0], target: parts[1]})
       })
       this.links = links
@@ -129,6 +124,7 @@ class Signal {
     }
   }
 
+  // add fromTx(txid)
   // account = { address: 'bitcoincash:....', wif: 'L1.....' }
   async sendTx(account, send = false) {
     try {
