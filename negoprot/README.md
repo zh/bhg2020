@@ -13,7 +13,7 @@ git clone https://github.com/zh/bhg2020.git
 cd bhg2020/negoprot
 npm link
 cd ../other-dir
-npm link negoprot
+npm link negoprot-js
 ```
 
 _TODO: create npm package and then:_
@@ -22,7 +22,7 @@ _TODO: create npm package and then:_
 npm install negoprot-js
 ```
 
-### 
+###
 
 ### Library instantiation
 

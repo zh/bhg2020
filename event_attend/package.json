@@ -1,0 +1,32 @@
+{
+  "name": "event_attender",
+  "version": "0.1.0",
+  "description": "NFT based event attending",
+  "main": "src/attender.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zh/bhg2020/event_attender.git"
+  },
+  "keywords": [
+    "blockchain",
+    "bch",
+    "protocol",
+    "negotiation",
+    "event",
+    "meeting",
+    "anonymous",
+    "nft"
+  ],
+  "author": "Stoyan Zhekov <zh@zhware.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zh/bhg2020/event_attender/issues"
+  },
+  "homepage": "https://github.com/zh/bhg2020/event_attender#readme",
+  "dependencies": {
+    "bch-js-ext": "^0.1.1"
+  }
+}

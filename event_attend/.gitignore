@@ -1,0 +1,11 @@
+node_modules/*
+.nyc_output/*
+
+docs/
+coverage/
+
+# This paragraph comes last. Force includes specific files.
+!docs/README.md
+
+organizer.json
+attender.json
