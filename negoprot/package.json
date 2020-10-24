@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/zh/negoprot-js#readme",
   "dependencies": {
-    "bch-js-ext": "^0.1.1"
+    "bch-js-ext": "^0.1.2"
   }
 }
