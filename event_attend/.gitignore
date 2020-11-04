@@ -7,5 +7,6 @@ coverage/
 # This paragraph comes last. Force includes specific files.
 !docs/README.md
 
+examples.local/
 organizer.json
 attender.json

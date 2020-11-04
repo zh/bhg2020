@@ -19,12 +19,13 @@ class SignalWall {
     return this.signals(number, `${this.proto} ACC `)
   }
 
-  async signals(number = 100, skip = 0, prefix = '') {
+  async signals(address, number = 100, skip = 0, prefix = '') {
     try {
       const query = {
         v: 3,
         q: {
           find: {
+            'in.e.a': address.split('bitcoincash:')[1],
             'out.b0': {
               'op': 106
             },
@@ -53,7 +54,6 @@ class SignalWall {
       if (!result.data || !result.data.c || result.data.c.length === 0) {
         return []
       }
-      // console.log(`sigs: ${JSON.stringify(result.data, null, 2)}`)
       const msgPrefix = prefix ? prefix : `${this.proto} `
       return result.data.c.filter(function(signal) {
         if (signal && signal.msg && signal.msg.startsWith(msgPrefix)) return true
@@ -67,7 +67,7 @@ class SignalWall {
 
   // can take some time. be patient
   // 5 times * 100 records to return number of records
-  async list(number = 10, prefix = '') {
+  async list(address, number = 10, prefix = '') {
     try {
       const TIMES = 5
       const VOLUME = 100
@@ -77,7 +77,7 @@ class SignalWall {
       const totalSignals = []
       let totalNumber = 0
       for(let i = 0; i < TIMES; i++) {
-        const iterSignals = await this.signals(VOLUME, i * VOLUME, prefix)
+        const iterSignals = await this.signals(address, VOLUME, i * VOLUME, prefix)
         if (iterSignals.length > 0)
           totalSignals.push(...iterSignals)
         // console.log(`n: ${number}, i: ${i}, c: ${totalSignals.length}`)

@@ -32,6 +32,31 @@ class MeetingProtocol {
     return this.message.sendTx(account, send)
   }
 
+  // class method?
+  async list(address, number = 10, prefix = '') {
+    const signals = (await this.np.SignalWall.list(address, number, prefix)).map(s => ({
+      txid: s.txid,
+      signal: this.np.Signal.fromMessage(s.msg, ['MTG', 'ATT']).toObj()
+    }))
+    return signals
+  }
+
+  async meetings(address, number = 10, prefix = '') {
+    let signals = await this.list(address, number, prefix)
+    return signals.filter(function (s) {
+      if (s && s.signal && s.signal.verb === 'MTG') return true
+      return false
+    })
+  }
+
+  async atendees(address, number = 10, prefix = '') {
+    let signals = await this.list(address, number, prefix)
+    return signals.filter(function (s) {
+      if (s && s.signal && s.signal.verb === 'ATT') return true
+      return false
+    })
+  }
+
   onchain(txid) { return this.message.addTx(txid) }
   offchain(cid) { return this.message.addCid(cid) }
   wallet(address) { return this.message.addAddr(address) }

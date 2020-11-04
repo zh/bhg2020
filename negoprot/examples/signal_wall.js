@@ -28,13 +28,13 @@ try {
 async function testLib(account) {
   try {
     // create some signals first
-    let signals = (await np.SignalWall.signals()).map(s => ({
+    let signals = (await np.SignalWall.signals(account.address)).map(s => ({
       txid: s.txid,
       signal: np.Signal.fromMessage(s.msg).toObj()
     }))
     console.log(`wall: ${JSON.stringify(signals, null, 2)}`)
     // display last 3 signals
-    signals = (await np.SignalWall.list(3)).map(s => ({
+    signals = (await np.SignalWall.list(account.address, 3)).map(s => ({
       txid: s.txid,
       signal: np.Signal.fromMessage(s.msg).toObj()
     }))
