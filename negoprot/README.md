@@ -71,7 +71,8 @@ console.log(`message: ${accept.toMessage()} (${accept.length()})`)
 ### List last 10 signals in JSON format
 
 ```js
-const signals = (await np.SignalWall.list(10)).map(s => ({
+const address='bitcoincash:qq....'
+const signals = (await np.SignalWall.list(address, 10)).map(s => ({
   txid: s.txid,
   signal: np.Signal.fromMessage(s.msg).toObj()
 }))
